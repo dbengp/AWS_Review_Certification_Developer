@@ -208,3 +208,35 @@ Existem dois tipos principais de cookies usados para implementar a aderência:
 * **ALB:** O CZLB está **SEMPRE LIGADO** no nível do balanceador. Para desativá-lo, é preciso fazê-lo no nível do **Grupo-Alvo** (Target Group).
 * **NLB & GLB:** O CZLB é **DESLIGADO** por padrão e pode ser ativado nos **atributos do Load Balancer**.
 
+# 🔒 7. Certificados SSL/TLS e SNI (Server Name Indication)
+
+### 7.1. Conceitos Fundamentais
+* **Propósito:** Permite que o tráfego entre os clientes e o balanceador de carga seja **criptografado em trânsito** (criptografia em voo).
+* **Terminologia:**
+    * **SSL (Secure Sockets Layer):** Termo mais antigo, ainda amplamente usado.
+    * **TLS (Transport Layer Security):** Versão mais recente e tecnicamente correta (mais utilizada hoje).
+* **Validade:** Certificados têm data de validade e devem ser renovados regularmente.
+* **Autoridades Certificadoras (CAs):** Empresas que emitem certificados SSL públicos (ex: Comodo, GoDaddy, Letsencrypt).
+
+### 7.2. Terminação SSL/TLS na AWS
+* **Local:** Os certificados SSL (públicos ou personalizados) são carregados no **Balanceador de Carga (ELB)**.
+* **Processo:** O ELB realiza a **Terminação de Certificado SSL/TLS** (descriptografa o tráfego do cliente).
+* **Comunicação Back-end:**
+    * O tráfego do cliente para o ELB é **HTTPS** (criptografado).
+    * O tráfego do ELB para a instância EC2 pode ser **HTTP** (não criptografado), pois o tráfego está contido dentro da rede privada da VPC.
+* **Gerenciamento de Certificados:** Os certificados são gerenciados usando o **AWS Certificate Manager (ACM)**, onde você pode solicitar ou carregar seus próprios certificados (formato X.509).
+
+### 7.3. Server Name Indication (SNI)
+* **Problema que Resolve:** Permite carregar **múltiplos certificados SSL em um único balanceador de carga/servidor web** para atender a vários sites/domínios.
+* **Mecanismo:** O cliente deve indicar o **nome do host de destino** durante o handshake SSL inicial. O ELB usa essa informação para carregar o certificado correto para o domínio solicitado.
+
+### 7.4. Compatibilidade com Certificados (SNI)
+
+O suporte a múltiplos certificados (via SNI) varia entre os tipos de Load Balancers:
+
+| Tipo de Load Balancer | Suporte SNI (Múltiplos Certificados) | Padrão |
+| :--- | :--- | :--- |
+| **Application Load Balancer (ALB)** | **SIM** | Suporta vários ouvintes e certificados (v2). |
+| **Network Load Balancer (NLB)** | **SIM** | Suporta vários ouvintes e certificados (v2). |
+| **Classic Load Balancer (CLB)** | **NÃO** | Suporta apenas **UM** certificado SSL. Para múltiplos domínios, seriam necessários múltiplos CLBs.
+
