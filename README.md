@@ -240,3 +240,32 @@ O suporte a múltiplos certificados (via SNI) varia entre os tipos de Load Balan
 | **Network Load Balancer (NLB)** | **SIM** | Suporta vários ouvintes e certificados (v2). |
 | **Classic Load Balancer (CLB)** | **NÃO** | Suporta apenas **UM** certificado SSL. Para múltiplos domínios, seriam necessários múltiplos CLBs.
 
+# 💧 8. Drenagem de Conexão (Connection Draining) / Atraso de Cancelamento (Deregistration Delay)
+
+### 8.1. Conceito e Terminologia
+* **Propósito:** Conceder tempo suficiente para que uma instância de destino conclua as **solicitações ativas/em andamento** antes de ser retirada do serviço (desregistrada ou marcada como não íntegra).
+* **Nomes Diferentes:**
+    * **Classic Load Balancer (CLB):** Chamado de **Drenagem de Conexão (Connection Draining)**.
+    * **ALB/NLB/GLB (Gerações mais novas):** Chamado de **Atraso de Cancelamento (Deregistration Delay)**.
+
+### 8.2. Fluxo de Operação (Referência ao Diagrama)
+O diagrama ilustra o estado de "Drenagem":
+
+1.  **Instância em Drenagem:** Quando uma instância EC2 (superior) está sendo desregistrada ou marcada como não íntegra, o ELB a coloca no estado **DRAINING**.
+2.  **Tráfego Existente:** O ELB permite que as **conexões existentes** (dos usuários já conectados) a essa instância se **concluam** ("waiting for existing connections to complete").
+3.  **Novas Conexões:** O ELB **para de enviar novas solicitações** a essa instância.
+4.  **Roteamento:** O ELB estabelece novas conexões **apenas com as outras instâncias saudáveis** (inferiores).
+5.  **Término:** Após a conclusão de todas as solicitações em andamento (ou após o tempo limite), a instância é retirada de serviço.
+
+### 8.3. Configuração
+* **Local de Configuração:** O tempo de drenagem é parametrizável.
+* **Valor Padrão:** **300 segundos (5 minutos)**.
+* **Intervalo:** Pode ser configurado entre 1 e **3600 segundos (1 hora)**.
+* **Desativação:** Definir o valor como **zero (0)** desativa o recurso (sem drenagem).
+
+### 8.4. Implicações na Aplicação
+| Cenário da Aplicação | Configuração Recomendada | Vantagem/Desvantagem |
+| :--- | :--- | :--- |
+| **Solicitações Curtas** (Ex: < 1 segundo) | Valor baixo (Ex: 30 segundos) | A instância sai de linha rapidamente. |
+| **Solicitações Longas** (Ex: Uploads, Long-Polling) | Valor alto (Ex: 300+ segundos) | Garante que as solicitações longas não sejam perdidas. A desvantagem é que a instância demora mais para sair de linha.
+
