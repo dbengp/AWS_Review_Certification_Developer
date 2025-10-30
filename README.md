@@ -88,3 +88,35 @@ Os Grupos-Alvo são os destinos reais para onde o tráfego é roteado.
         * `X-Forwarded-For` (IP do cliente)
         * `X-Forwarded-Ports` (Porta do cliente)
         * `X-Forwarded-Proto` (Protocolo usado)
+
+# ⚡ Network Load Balancer (NLB) da AWS
+
+### 1. Conceito e Camada de Operação
+* **Camada de Operação:** Camada 4 (Transporte).
+* **Protocolos Suportados:** **TCP** e **UDP**.
+    * *Dica para o Exame:* Ao ver "UDP" ou alto desempenho TCP, pense em NLB.
+
+### 2. Características de Desempenho e Endereçamento
+* **Desempenho Extremo:** Projetado para lidar com **milhões de solicitações por segundo**.
+* **Latência:** Apresenta **latência ultrabaixa**.
+* **Endereçamento IP Estático:**
+    * Tem um **IP estático por Zona de Disponibilidade (AZ)**.
+    * Você pode atribuir um **IP Elástico (EIP)** a cada AZ.
+    * *Dica para o Exame:* Se o seu aplicativo precisa ser acessado por um conjunto **fixo/estático** de IPs, o NLB é a opção ideal.
+
+### 3. Funcionamento e Grupos-Alvo (Target Groups)
+O NLB encaminha o tráfego para **Grupos-Alvo** que podem ser:
+
+* **Instâncias EC2:** O NLB envia tráfego TCP ou UDP diretamente para as instâncias.
+* **Endereços IP Privados:**
+    * É possível registrar IPs privados de instâncias EC2 ou de **servidores no seu próprio Data Center (on-premises)**, permitindo o balanceamento de tráfego híbrido.
+* **Combinação NLB + ALB:**
+    * É possível ter um **NLB na frente de um ALB** (Network Load Balancer antes de um Application Load Balancer).
+    * **Motivo:** O NLB fornece os **endereços IP fixos**, e o ALB fornece as **regras avançadas de roteamento** baseadas em HTTP/Camada 7.
+
+### 4. Verificações de Saúde (Health Checks)
+As verificações de integridade nos Grupos-Alvo do NLB suportam três protocolos diferentes:
+
+1.  **TCP**
+2.  **HTTP**
+3.  **HTTPS**
