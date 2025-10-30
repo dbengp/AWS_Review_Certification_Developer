@@ -116,3 +116,32 @@ O NLB encaminha o tráfego para **Grupos-Alvo** que podem ser:
 
 ### 4. Verificações de Saúde (Health Checks)
 As verificações de integridade nos Grupos-Alvo do NLB suportam três protocolos diferentes: **TCP** | **HTTP** | **HTTPS**
+
+# 🛡️ 4. Gateway Load Balancer (GLB) da AWS
+
+### 4.1. Propósito e Casos de Uso
+* **Função Principal:** Implantar, dimensionar e gerenciar uma frota de **dispositivos virtuais de rede de terceiros** na AWS.
+* **Uso:** É essencialmente um *loop* na rede para forçar o tráfego a passar por:
+    * **Firewalls** (de terceiros).
+    * Sistemas de **Detecção/Prevenção de Intrusão (IDS/IPS)**.
+    * Sistemas de **Inspeção Profunda de Pacotes (DPI)**.
+    * **Dispositivos de modificação de carga útil** no nível da rede.
+
+### 4.2. Características e Funcionamento
+* **Camada de Operação:** Camada 3 (Rede - Pacotes IP). É o nível mais baixo de operação entre os Load Balancers.
+* **Protocolo de Comunicação:** Usa o **Protocolo GENEVE** na porta `6081` para trocar tráfego com os dispositivos virtuais de destino.
+* **Funcionalidade Dupla:**
+    1.  **Gateway de Rede Transparente:** Todo o tráfego da VPC é roteado para ele através de modificações nas **Tabelas de Rota**, tornando sua inspeção transparente para a aplicação.
+    2.  **Balanceador de Carga:** Distribui o tráfego entre a frota de dispositivos virtuais no Grupo-Alvo.
+
+### 4.3. Fluxo de Tráfego (Conceito Chave)
+1.  O tráfego dos usuários é interceptado pelas tabelas de rota e enviado ao **GLB**.
+2.  O GLB distribui o tráfego para o Grupo-Alvo de **Dispositivos Virtuais (Appliances)**.
+3.  Os dispositivos inspecionam (ou modificam) o tráfego.
+4.  Se aceito, o tráfego é enviado de volta ao **GLB**.
+5.  O GLB encaminha o tráfego inspecionado para o **Aplicativo** (de forma transparente).
+
+### 4.4. Grupos-Alvo (Target Groups)
+* **Destinos Suportados:**
+    * Instâncias EC2 (onde rodam os *appliances* de rede).
+    * Endereços **IP Privados** (útil se você estiver rodando dispositivos virtuais em seu próprio data center).
