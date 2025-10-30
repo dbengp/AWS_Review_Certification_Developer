@@ -64,3 +64,13 @@ Escolher a métrica correta é crucial para um dimensionamento eficiente. Boas m
 * **Função:** Impede que o ASG inicie ou encerre instâncias adicionais imediatamente. Isso permite que as **métricas se estabilizem** e as novas instâncias entrem em vigor antes de tomar a próxima decisão de dimensionamento.
 * **Otimização:** Usar uma **AMI pré-configurada** (pronta para uso) reduz o tempo de inicialização da instância, permitindo que o Cooldown seja reduzido, resultando em um **dimensionamento mais dinâmico**.
 
+### 5.4. Atualização de Instância (Instance Refresh)
+* **Propósito:** É um recurso nativo do ASG usado para **atualizar um grupo inteiro de Auto Scaling** com um **novo Modelo de Execução (Launch Template)**, recriando progressivamente todas as instâncias EC2.
+* **Caso de Uso:** Ideal quando você atualiza a **AMI subjacente**, altera o tipo de instância, ou aplica qualquer modificação no Modelo de Execução e precisa que todas as instâncias sejam substituídas.
+* **Processo:**
+    1. O usuário cria um **novo Modelo de Execução**.
+    2. O usuário inicia a chamada de API `StartInstanceRefresh`.
+    3. O ASG encerra instâncias antigas e lança novas instâncias usando o novo modelo, de forma **progressiva**.
+* **Configuração Chave:**
+    * **Percentual Mínimo Saudável (Min Healthy Percentage):** Define a porcentagem mínima de instâncias que devem estar íntegras e atendendo ao tráfego durante o processo de atualização. Garante que a aplicação mantenha a disponibilidade durante a substituição.
+    * **Tempo de Aquecimento (Warm-up Time):** É o tempo que o ASG espera até considerar que a nova instância EC2 está **pronta** para atender ao tráfego e para ser contabilizada nas métricas de dimensionamento e de porcentual saudável.
