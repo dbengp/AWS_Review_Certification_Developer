@@ -205,6 +205,6 @@ Existem dois tipos principais de cookies usados para implementar a aderência:
 * **Observação de Cobrança:** A AWS normalmente cobra por transferências de dados entre AZs. O **ALB** é a **exceção notável**, onde o CZLB é gratuito.
 
 ### 6.4. Configuração (Onde Habilitar/Desabilitar)
-* **ALB:** O CZLB está **SEMPRE LIGADO** no nível do balanceador. Para desativá-lo, é preciso fazê-lo no nível do **Grupo-Alvo**.
+* **ALB:** O CZLB está **SEMPRE LIGADO** no nível do balanceador. Para desativá-lo, é preciso fazê-lo no nível do **Grupo-Alvo** (Target Group).
 * **NLB & GLB:** O CZLB é **DESLIGADO** por padrão e pode ser ativado nos **atributos do Load Balancer**.
 
