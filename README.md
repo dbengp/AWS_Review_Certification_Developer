@@ -145,3 +145,37 @@ As verificações de integridade nos Grupos-Alvo do NLB suportam três protocolo
 * **Destinos Suportados:**
     * Instâncias EC2 (onde rodam os *appliances* de rede).
     * Endereços **IP Privados** (útil se você estiver rodando dispositivos virtuais em seu próprio data center).
+
+# 📍 5. Sessões Fixas (Sticky Sessions) / Afinidade de Sessão
+
+### 5.1. Conceito e Propósito
+* **Definição:** É a capacidade de garantir que um **cliente** que faz múltiplas solicitações ao balanceador de carga seja **sempre direcionado para a mesma instância de back-end**.
+* **Caso de Uso:**
+    * Principalmente usado para **manter os dados da sessão** (ex: carrinho de compras, status de login) em uma única instância de backend.
+* **Comportamento Padrão vs. Aderência:**
+    * **Padrão:** O ELB distribui a carga de todas as solicitações uniformemente.
+    * **Aderência:** Desvia do padrão, enviando solicitações subsequentes do mesmo cliente para a instância inicial.
+* **Desvantagem:** Pode **desequilibrar a carga** entre as instâncias se um único usuário ou um grupo de usuários gerar um tráfego muito alto ("usuários muito aderentes").
+
+### 5.2. Habilitação e Escopo
+* **Serviços Suportados:** Pode ser ativado para **Classic Load Balancer (CLB)**, **Application Load Balancer (ALB)** e **Network Load Balancer (NLB)**.
+* **Nível de Configuração:** A aderência é configurada no nível do **Grupo-Alvo (Target Group)**.
+* **Mecanismo:** É implementado usando **cookies** que são enviados entre o balanceador de carga e o cliente. A aderência termina quando o cookie expira.
+
+### 5.3. Tipos de Cookies para Aderência
+
+Existem dois tipos principais de cookies usados para implementar a aderência:
+
+| Tipo de Cookie | Geração | Propriedades | Nome Padrão do Cookie (ALB) |
+| :--- | :--- | :--- | :--- |
+| **Baseado em Duração** | Gerado pelo **Balanceador de Carga (ELB)**. | Possui uma expiração baseada em uma **duração específica** (ex: 1 segundo a 7 dias) definida no ELB. | `AWSALB` (para ALB) ou `AWSELB` (para CLB). |
+| **Baseado em Aplicativo** | Gerado pelo **Destino (Instância / Aplicativo)**. | É um cookie **personalizado** que pode incluir atributos definidos pelo aplicativo. O ELB apenas usa o nome do cookie para aderência. | `AWSALBAPP` (para ALB). |
+
+* **Nomes Reservados:** Não devem ser usados nomes de cookies reservados pela AWS: `AWSALB`, `AWSALBAPP`, `AWSALBTG`.
+
+### 5.4. Como Funciona (Fluxo Básico)
+1.  **Primeira Solicitação:** Cliente faz a solicitação ao ALB; o ALB a encaminha para a Instância A.
+2.  **Resposta:** O ALB envia uma resposta ao cliente que **inclui o cookie de aderência** (com a informação de roteamento e data de expiração).
+3.  **Solicitações Subsequentes:** O navegador do cliente envia o **cookie de aderência** em todas as solicitações seguintes.
+4.  **Roteamento:** O ALB lê o cookie e roteia a solicitação diretamente para a **Instância A**.
+
