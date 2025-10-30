@@ -179,3 +179,32 @@ Existem dois tipos principais de cookies usados para implementar a aderência:
 3.  **Solicitações Subsequentes:** O navegador do cliente envia o **cookie de aderência** em todas as solicitações seguintes.
 4.  **Roteamento:** O ALB lê o cookie e roteia a solicitação diretamente para a **Instância A**.
 
+# 🗺️ 6. Balanceamento de Zonas Cruzadas (Cross-Zone Load Balancing - CZLB)
+
+### 6.1. Conceito
+* **Definição:** Mecanismo que permite que uma instância do balanceador de carga em uma Zona de Disponibilidade (AZ) distribua o tráfego uniformemente para **todas as instâncias de destino** registradas, **em todas as AZs**, e não apenas para as instâncias dentro de sua própria AZ.
+
+### 6.2. Comportamentos de Roteamento
+
+| Cenário | Descrição | Impacto no Tráfego |
+| :--- | :--- | :--- |
+| **Com CZLB Ativado** (Exemplo: 2 instâncias no AZ-A, 8 instâncias no AZ-B = 10 no total) | Cada nó do Load Balancer distribui seu tráfego para **TODAS as 10 instâncias**. | O tráfego é distribuído **uniformemente** entre todas as instâncias EC2, independentemente da AZ. Cada instância recebe 10% do tráfego total. |
+| **Sem CZLB (Padrão ou Desativado)** | Cada nó do Load Balancer distribui o tráfego **apenas para as instâncias em sua própria AZ**. | Se o número de instâncias for desequilibrado, as instâncias em AZs com menos targets receberão **mais tráfego**. |
+
+> **Exemplo Sem CZLB:** O AZ-A (com 2 instâncias) receberá 50% do tráfego total. Cada instância do AZ-A receberá 25% do tráfego total (50% / 2).
+
+### 6.3. Status de Cobrança e Padrão por Tipo de Load Balancer
+
+| Tipo de Load Balancer | Padrão CZLB | Cobrança por Transferência de Dados Inter-AZ |
+| :--- | :--- | :--- |
+| **Application Load Balancer (ALB)** | **LIGADO (Ativado)** | **NÃO COBRADO** (mesmo que haja tráfego entre AZs). |
+| **Network Load Balancer (NLB)** | **DESLIGADO (Desativado)** | **COBRADO** se for ativado. |
+| **Gateway Load Balancer (GLB)** | **DESLIGADO (Desativado)** | **COBRADO** se for ativado. |
+| **Classic Load Balancer (CLB)** | DESLIGADO | **NÃO COBRADO** se for ativado. |
+
+* **Observação de Cobrança:** A AWS normalmente cobra por transferências de dados entre AZs. O **ALB** é a **exceção notável**, onde o CZLB é gratuito.
+
+### 6.4. Configuração (Onde Habilitar/Desabilitar)
+* **ALB:** O CZLB está **SEMPRE LIGADO** no nível do balanceador. Para desativá-lo, é preciso fazê-lo no nível do **Grupo-Alvo**.
+* **NLB & GLB:** O CZLB é **DESLIGADO** por padrão e pode ser ativado nos **atributos do Load Balancer**.
+
