@@ -1,6 +1,3 @@
-# AWS_Review_Certification_Developer
-## Agrupa resumos em Markdown sobre os recursos da AWS que são objetivos da prova de certificação
-
 # 🌐 Introdução ao Elastic Load Balancing (ELB) da AWS
 
 ### 1. O Que é Balanceamento de Carga?
