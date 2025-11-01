@@ -1,6 +1,6 @@
 # 🌐 Introdução ao Elastic Load Balancing (ELB) da AWS
 
-### 1. O Que é Balanceamento de Carga?
+## 1. Conceito e Objetivo Principal
 * **Conceito:** Um servidor ou conjunto de servidores que **encaminha o tráfego recebido** para várias instâncias (servidores de back-end/downstream).
 * **Mecanismo:** Distribui a carga entre as instâncias de forma equitativa (ou baseada em algoritmos).
 * **Ponto Único de Acesso:** Usuários se conectam a um **ponto de extremidade (endpoint)** único do balanceador de carga, sem saber a qual instância de back-end estão conectados.
