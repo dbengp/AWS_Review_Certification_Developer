@@ -265,5 +265,3 @@ O diagrama ilustra o estado de "Drenagem":
 | :--- | :--- | :--- |
 | **Solicitações Curtas** (Ex: < 1 segundo) | Valor baixo (Ex: 30 segundos) | A instância sai de linha rapidamente. |
 | **Solicitações Longas** (Ex: Uploads, Long-Polling) | Valor alto (Ex: 300+ segundos) | Garante que as solicitações longas não sejam perdidas. A desvantagem é que a instância demora mais para sair de linha.
-
-
