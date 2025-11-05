@@ -90,5 +90,3 @@ Quando o cache fica cheio, itens precisam ser removidos.
 * **VPC:** O ElastiCache é implantado em uma **VPC (Virtual Private Cloud)** e só pode ser acessado por instâncias EC2, ECS Tasks ou Lambdas **dentro dessa mesma VPC** ou via *Peering*.  
 * **Segurança:** O acesso é controlado via **Security Groups**, que atuam como um *firewall* virtual de nível de instância.  
 * **IAM:** O acesso às APIs de gerenciamento do ElastiCache é controlado via IAM.
-
----
