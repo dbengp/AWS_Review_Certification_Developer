@@ -1,4 +1,4 @@
-# 🌐 Introdução ao Elastic Load Balancing (ELB) da AWS
+# 🌐 **Elastic Load Balancing (ELB) da AWS**
 
 ## 1. Conceito e Objetivo Principal
 * **Conceito:** Um servidor ou conjunto de servidores que **encaminha o tráfego recebido** para várias instâncias (servidores de back-end/downstream).
