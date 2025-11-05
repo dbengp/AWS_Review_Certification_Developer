@@ -103,7 +103,3 @@ Comandos essenciais para desenvolvimento local e CI/CD:
 * docker build / docker run / docker push  
 * aws configure  
 * aws ecr create-repository
-
----
-
-O resumo agora cobre todos os pontos solicitados, incluindo as melhores práticas e ferramentas CLI para ECS, ECR e EKS.
