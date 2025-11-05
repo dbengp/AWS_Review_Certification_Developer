@@ -62,7 +62,7 @@ Os princípios de segurança do Aurora são idênticos aos do RDS:
 
 ---
 
-### **5\. Considerações importantes **
+### **5\. Considerações importantes**
 
 #### **A. Amazon Aurora Serverless**
 
