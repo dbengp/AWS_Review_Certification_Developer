@@ -85,7 +85,3 @@ Um recurso avançado (limitado a alguns motores) onde **todas as instâncias do 
 
 * **Vantagem:** Oferece disponibilidade contínua (zero *downtime*) para escritas, pois a perda de qualquer nó de *writer* não interrompe o serviço.  
 * **Caso de Uso:** Aplicações com alta necessidade de disponibilidade de escrita.
-
----
-
-Este resumo do Aurora oferece o detalhamento da arquitetura proprietária e dos recursos avançados (Serverless, Global Database, Multi-Master) essenciais para a certificação.
