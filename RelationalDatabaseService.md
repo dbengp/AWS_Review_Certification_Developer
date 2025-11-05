@@ -1,4 +1,4 @@
-#   Relational Database Service (RDS) da AWS
+# **Relational Database Service (RDS) da AWS**
 
 ## 1. Conceito e Objetivo Principal
 * É um serviço gerenciado que facilita a configuração, operação e escalabilidade de bancos de dados relacionais (baseados em SQL) na nuvem.
@@ -120,5 +120,3 @@ O RDS usa grupos para permitir customização de baixo nível sem acessar o sist
 
 * **Risco:** Um *upgrade* de versão principal (ex: MySQL 5.7 para 8.0) é uma operação que requer **downtime** e pode introduzir **mudanças incompatíveis** no banco de dados ou no código da aplicação.  
 * **Melhor Prática:** É essencial testar a compatibilidade em um ambiente de *staging* ou usar o serviço **Blue/Green Deployment** para minimizar o impacto.
-
----
