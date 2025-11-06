@@ -1,5 +1,5 @@
 # AWS_Review_Certification_Developer
-## Agrupa resumos em Markdown sobre os recursos da AWS que são objetivos da prova de certificação.
+## Agrupa resumos sobre os recursos da AWS que são objetivos da prova de certificação.
 
 ### 1. [Elastic Load Balancing (ELB)](./ElasticLoadBalancing.md#1-conceito-e-objetivo-principal)
 
