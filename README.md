@@ -14,3 +14,5 @@
 ### 6. [ElastiCache](./ElastiCache.md#1-conceito-e-objetivo-principal)
 
 ### 7. [ECS ECR EKS](./ECS_ECR_EKS.md#1-conceito-e-objetivo-principal)
+
+### 8. [Elastic Beanstalk](./ElasticBeanstalk.md#1-conceito-e-objetivo-principal)
