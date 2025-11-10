@@ -24,3 +24,8 @@
 ### 10. [CICD - AWS](./CICD.md#1-conceito-e-objetivo-principal)
 
 ### 11. [API GATEWAY](./API_Gateway.md#1-conceito-e-objetivo-principal)
+
+### 12. [DynamoDB](./DynamoDB.md#1-conceito-e-objetivo-principal)
+
+### 13. [DynamoDB](./DynamoDB.md#1-conceito-e-objetivo-principal)
+
