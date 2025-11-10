@@ -27,5 +27,5 @@
 
 ### 12. [DynamoDB](./DynamoDB.md#1-conceito-e-objetivo-principal)
 
-### 13. [DynamoDB](./DynamoDB.md#1-conceito-e-objetivo-principal)
+### 13. [Lambda](./Lambda.md#1-conceito-e-objetivo-principal)
 
