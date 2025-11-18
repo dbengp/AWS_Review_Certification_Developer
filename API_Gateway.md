@@ -2,13 +2,9 @@
 
 ## **1. Conceito e Objetivo Principal**
 
-O Amazon API Gateway é um serviço *serverless* que permite criar, publicar, manter, monitorar e proteger APIs REST, HTTP e WebSocket em escala. Ele atua como uma **porta de entrada** para acessar recursos de *backend* (como AWS Lambda ou HTTP endpoints) e oferece uma rica camada de recursos adicionais.
+O Amazon API Gateway é um serviço *serverless* que permite criar, publicar, manter, monitorar e proteger APIs REST, HTTP e WebSocket em escala. Ele atua como uma **porta de entrada** para acessar recursos de *backend* (como AWS Lambda ou HTTP endpoints) e oferece uma rica camada de recursos adicionais. É um serviço *serverless* que expõe APIs públicas (HTTP endpoints) para clientes. Ele **atua como um *proxy***, recebendo solicitações do cliente e as encaminhando para os serviços de *backend*.
 
-### **1.1 O que é o API Gateway?**
-
-É um serviço *serverless* que expõe APIs públicas (HTTP endpoints) para clientes. Ele **atua como um *proxy***, recebendo solicitações do cliente e as encaminhando para os serviços de *backend*.
-
-### **1.2 Por que usar o API Gateway?**
+### **1.1 Por que usar o API Gateway?**
 
 Ele oferece muito mais do que um simples *endpoint* HTTP (como um Application Load Balancer). Seus recursos incluem:
 
@@ -18,7 +14,7 @@ Ele oferece muito mais do que um simples *endpoint* HTTP (como um Application Lo
 * **Validação:** Transformação e validação de requisições e respostas.  
 * **Geração:** Exportação da API e geração de SDKs de cliente.
 
-### **1.3 Integrações de Backend (Integration Types)**
+### **1.2 Integrações de Backend (Integration Types)**
 
 O API Gateway pode se integrar a três tipos principais de *backends*:
 
